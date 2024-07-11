@@ -74,4 +74,3 @@ print("hello world!)
 [2] MarkText
 
 [3] Markdown All in One
-
