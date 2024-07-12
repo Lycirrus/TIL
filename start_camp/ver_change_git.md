@@ -85,6 +85,17 @@ modified 상태의 파일 되돌리기
 
 `git restore --staged` : git 저장소에 **<span style = 'background-color:ff00af'>commit이 존재할 경우</span>** staging area에서 unstage
 
+## Commit 수정하기
+- 바로 직전한 commit만 수정가능
+
+`git commit --amend`
+- 타이밍에 따라 message 수정인지 내용 수정인지가 결정됨
+- 명령어를 실행했을 때 맨 위의 갈색글자를 바꾸면 message가 바뀜
+- 빼먹은 파일이 있을 경우 staging area에 올린 후에 똑같은 명령어 실행
+- 다만 새로운 commit으로 만드는 개념이므로 협업을 할 때에는 다른 사람들과 논의하여 진행해야 한다
+
+  >불필요한 commit을 생성하지 않고, 직전 commit을 수정하여 진행하기 위해 사용한다.
+
 ## 궁금한 점
 - `git revert`를 이미 revert된 commit이나 revert로 생성된 commit에 적용하면 어떻게 되는가?
 - commit한 파일을 gitignore 하기 위해서도 `git rm --cached`을 사용한다. 해당 명령어의 정확한 역할
