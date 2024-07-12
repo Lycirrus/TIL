@@ -55,8 +55,8 @@ GitHub에서 자료를 찾아보던 나로써는 그것에 내 자료를 올리�
 
 <details>
   <summary>추가로...</summary>
-  <div markdown = 1>
-    마크다운 파일에서 html 태그를 이용해 토글을 만드는 방법을 찾았다.
+  <div markdown = 1>  
+    마크다운 파일에서 <span style='background-color: #ff002f'>html 태그</span>를 이용해 토글을 만드는 방법을 찾았다.
     물론 얼마나 쓸진 알 수 없다.
   </div>
 </details>
