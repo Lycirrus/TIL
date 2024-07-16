@@ -4,6 +4,8 @@
 - python
   - Sequence, Non-sequence, 기타 자료형
   - 형변환과 연산자
+- algorithm_python_prac
+  - 알고리즘 1문제
 
 **24/07/15**
 - python
