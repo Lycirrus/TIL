@@ -1,0 +1,100 @@
+# k번째 큰 수
+- 1부터 100 사이의 자연수가 적힌 N장의 카드가 있다. 카드의 숫자는 중복될 수 있다.<br> 이 중 3장을 뽑아 각 카드에 적힌 수를 합한 값을 기록한다.<br> 기록할 수 있는 모든 경우를 고려하며, 기록한 값 중 K번째로 큰 수를 출력하시오.
+
+<br>
+<details>
+  <summary>입력설명</summary>
+  <div markdown = 1>
+    첫 줄에 자연수 N<span style="color: #808080">(1<=T<=100)</span>과 K<span style="color: #808080">(1<=K<=50)</span>가 입력되고, 그 다음 줄에 N개의 카드값이 입력된다.
+  </div>
+</details>
+<br>
+<details>
+  <summary>출력설명</summary>
+  <div markdown = 1>
+    첫 줄에 K번째 수를 출력한다.<br> K번째 수는 반드시 존재한다.
+  </div>
+</details>
+<br>
+
+## 접근방법
+N개의 카드가 있을 때, 처음에 1장을 뽑는다. 그 다음 남은 N-1개 카드에서 1장을 뽑는다. 마지막으로 N-2개 카드에서 1장을 뽑는다. 뽑은 세장의 합을 기록하고 카드를 다시 카드뭉치에 넣는다. 비복원 추출을 반복하여 모든 경우의 수를 얻은 후, 정렬하여 K번째 큰 수를 찾는 방법으로 진행하였다.
+
+## 주요 코드 순서
+- N과 K값을 받고 카드값을 리스트로 받는다.
+
+  ```python
+  n, k = map(int, input().split())
+  nlist = list(map(int, input().split()))
+  ```
+
+- 3개의 카드값을 합한 값을 보관할 빈 리스트를 생성한다.
+  ```python
+  sulist = []
+  ```
+
+- 첫번째로 뽑을 카드를 for문을 이용해서 선정한다.  
+  ```python
+  for i in range(n):
+    a = nlist[i]
+  ```
+
+- for문 내부에 두번째 카드를 뽑는 for문을 작성한다. 다만 두번째 카드가 처음 뽑은 카드와 중복되지 않도록, 첫번쨰 카드의 Index는 넘어가도록 설정한다.
+  ```python
+  for j in range(n):
+    if j == i:
+      continue
+    b = nlist[j]
+  ```
+
+- 두번째 카드를 뽑는 for문 내부에 세번째 카드를 뽑는 for문을 작성한다. 이번에는 첫번째와 두번째 카드와 중복되지 않도록 그것들의 Index는 넘어가도록 설정한다.<br> 그리고 마지막에는 뽑은 세장의 합을 구해 앞서 생성한 리스트에 넣는다.
+  ```python
+  for l in range(n):
+    if l == i or l == j:
+      continue
+    c = nlist[l]
+    sulist.append(a+b+c)
+  ```
+
+- 중복을 제거하기 위해 합 기록 리스트를 set형으로 바꾼 후 다시 list형으로 바꾼다.<br> 그리고서 내림차순으로 정렬하여 K번째 큰 수를 찾는다.
+  ```python
+  suli = list(set(sulist))
+  suli.sort(reverse = True)
+  ```
+
+  #### 전체코드
+  ```python
+  n, k = map(int, input().split())
+  nlist = list(map(int, input().split()))
+  sulist = []
+
+  for i in range(n):
+    a = nlist[i]
+    for j in range(n):
+      if j == i:
+          continue
+      b = nlist[j]
+      for l in range(n):
+        if l == i or l == j:
+          continue
+        c = nlist[l]
+        sulist.append(a+b+c)
+
+  suli = list(set(sulist))
+  suli.sort(reverse = True)
+  print(suli[k-1])
+  ```
+
+## 보완점
+1. 합 기록 리스트의 자료형<br>
+ 중복을 제거하기 위해 set 자료형으로 생성하면 좋았을 것이다. 그러면 이중 형변환도 피할 수 있었다.
+ <br></br>
+1. 이미 한 번 뽑은 카드 조합을 다시 뽑는 비효율성
+ 내가 작성한 코드는 카드 조합이 중복으로 나오게 되어있다. 그러나 [1, 2, 3]번 순으로 뽑든 [2, 1, 3]번 순으로 뽑든 그 합은 동일하다. 따라서 더 효율적인 코드를 만들려면 이러한 반복을 없애야 한다.<br>
+ 카드 순서가 있다고 하면, 첫번째로 뽑은 순번의 이전 순번은 고려하지 않아도 되므로 아래와 같이 하면 될 것이다.
+    ```python
+    for i in range(n):
+      for j in range(i+1, n):
+        for l in range(j+1, n):
+    ```
+    그러면 중복 조합의 제거와 함께 먼저 뽑은 카드의 번호를 고려하는 if문도 뺄 수 있으므로 코드가 한결 간단해진다.
