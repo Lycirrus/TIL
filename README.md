@@ -1,5 +1,15 @@
 ### 내가 배우고 공부한 내용을 담는 공간
 
+**24/07/16**
+- python
+  - Sequence, Non-sequence, 기타 자료형
+  - 형변환과 연산자
+
+**24/07/15**
+- python
+  - python 개요
+  - Numeric, Str 자료형
+
 **24/07/14**
 - algorithm_python_prac
   - 알고리즘 1문제
