@@ -1,5 +1,11 @@
 ### 내가 배우고 공부한 내용을 담는 공간
 
+**24/07/17**
+- python
+  - 함수 생성 및 인자 종류
+  - map과 zip
+  - packing과 unpacking
+  
 **24/07/16**
 - python
   - Sequence, Non-sequence, 기타 자료형
