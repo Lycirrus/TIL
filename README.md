@@ -5,6 +5,8 @@
   - 함수 생성 및 인자 종류
   - map과 zip
   - packing과 unpacking
+- algorithm_python_prac
+  - 알고리즘 2문제
   
 **24/07/16**
 - python
