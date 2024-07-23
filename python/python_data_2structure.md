@@ -213,7 +213,12 @@ BNF의 확장 버전
 
 ## 자체 Q&A
 - setdefault와 update의 작동방식(tutor)
-  >
+  >dct = {'name': 'Bob', 'age': 30, 'country': 'USA'}
+
+dct_get1 = dct.get('name', 50)
+dct_get2 = dct.get('point', 50)
+dct_sdf = dct.setdefault('point', 50)
+dct_udt = dct.update({'age': 25, 'product': 'Computer'})
   >
   >
 - pop: 딕셔너리에서 키를 미지정 한다면, 또는 세트에서 인자 입력하면 어떻게 되는가?
