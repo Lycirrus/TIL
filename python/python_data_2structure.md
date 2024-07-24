@@ -212,15 +212,31 @@ BNF의 확장 버전
 서로 다른 프로그래밍 언어, 데이터 형식, 프로토콜 등의 문법을 통일하여 정의하기 위함
 
 ## 자체 Q&A
-- setdefault와 update의 작동방식(tutor)
-  >dct = {'name': 'Bob', 'age': 30, 'country': 'USA'}
-
-dct_get1 = dct.get('name', 50)
-dct_get2 = dct.get('point', 50)
-dct_sdf = dct.setdefault('point', 50)
-dct_udt = dct.update({'age': 25, 'product': 'Computer'})
-  >
-  >
+- get, setdefault와 update의 작동방식
+  > 다음과 같은 딕셔너리가 있다고 하자.
+  > ```python
+  > dct = {'name': 'Bob', 'age': 30, 'country': 'USA'}
+  > ```
+  > 먼저 `.get()`을 이용하면
+  > ```python
+  > dct_get = dct.get('point', 50)
+  > ```
+  > ![get](./image/dic_get.PNG)
+  > 'point' 키가 없으므로 50이 반환되고, 기존 딕셔너리에는 영향이 없음을 볼 수 있었다.<br>
+  > 그 다음 `.setdefault()`를 사용하면
+  > ```python
+  > dct_sdf = dct.setdefault('point', 50)
+  > ```
+  > ![setdefault](./image/dic_sdf.PNG)
+  > setdefault의 기능으로 딕셔너리에 point라는 새로운 키와 그 값 50이 추가된 모습이다.<br>
+  > get이 확인이라면, setdefault는 확인 및 추가를 하는 것이다.<br>
+  > 마지막으로 `.update()`를 사용해보자.
+  > ```python
+  > dct_udt = dct.update({'age': 25, 'product': 'Computer'})
+  > ```
+  > ![update](./image/dic_udt.PNG)
+  > 값의 변경과 새로운 키/값 쌍이 추가됨을 확인할 수 있었다.
+<br></br>
 - pop: 딕셔너리에서 키를 미지정 한다면, 또는 세트에서 인자 입력하면 어떻게 되는가?
   > ```python
   > person = {'name': 'Alice', 'age': 25}
@@ -234,3 +250,7 @@ dct_udt = dct.update({'age': 25, 'product': 'Computer'})
   > 공식 문서에 있는 예시대로 사용해야겠다.
 
 ## 공부 내용 돌아보기
+오늘 딕셔너리와 세트의 메소드까지 배웠다. 기존에 'append가 왜 안 먹히지'라고 생각한적이 있는데, 앞의 데이터형을 고려하지 않아서 였을 것이다.<br>
+어떠한 인자가 필요한지도 확인해야 할 것이다. 보니 공식에서 지정해준 인자를 사용하지 않거나, 그 초과분을 사용하면 오류가 나는 것을 확인하였다.<br>
+해시의 개념은 이해하기 어려웠다.
+pop 같은 경우 작동을 위해 임의로 선택하지만, 그렇다고 딕셔너리나 세트에 순서가 있는 것은 아니다. 해시 함수에 의해 연결점이 달라지고, 실행 시마다 바뀌니 순서가 있다고 하기는 힘들 것이다. 이는 조금 더 찾아보면 좋을 것 같다. 
