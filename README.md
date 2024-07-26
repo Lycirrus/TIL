@@ -2,6 +2,7 @@
 
 **24/07/26**
 - s_pjt
+  - numpy, pandas, matplotlib을 활용한 데이터 분석
 
 **24/07/25**
 -python
