@@ -5,7 +5,7 @@
   - numpy, pandas, matplotlib을 활용한 데이터 분석
 
 **24/07/25**
--python
+- python
   - 상속
   - 예외 처리
 
