@@ -1,5 +1,9 @@
 ### 내가 배우고 공부한 내용을 담는 공간
 
+**24/07/29**
+- algorithm
+  - 버블정렬
+
 **24/07/26**
 - s_pjt
   - numpy, pandas, matplotlib을 활용한 데이터 분석

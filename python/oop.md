@@ -37,7 +37,7 @@
   - D는 B와 C 중 어떤 버전을 상속하는가?
   
   #### 파이썬에서의 해결
-  - MRO*(Method Resolution Order)* 알고리즘 사용
+  - MRO *(Method Resolution Order)* 알고리즘 사용
   - 상속 속성들의 검색을 깊이 우선으로 왼쪽에서 오른쪽으로 진행하여 두 번 이상 검색하지 않도록 함
   
   #### MRO
@@ -60,9 +60,8 @@
         print(f'Value from ParentB: {self.value_b}')
     
     class Child(ParentA, ParentB):
-      d
+      pass
     ```
-    a;skglaskdl;ksadgklad
     > 부모 클래스에 입력했던 메서드 내용을 중복해서 적지 않아도 된다.
     > 'parent B'의 중복 메서드를 사용하기 위해서는 `ParentB.show_value()`처럼 직접 지정해주어야 한다.
     > super는 정의될 때가 아닌 메서드가 호출될 때 작동하여 클래스를 탐색하기 시작한다.
