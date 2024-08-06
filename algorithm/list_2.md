@@ -74,7 +74,7 @@
   > 평균은 전체 개수로 나누는 것이다.<br>
   > => **1/n** <br>
   > 두 식을 곱하면,<br>
-  > **(n+1)/2** <br>
+  > => **(n+1)/2** <br>
   > 따라서 시간복잡도는 **<span style = "color: red">O(n)</span>** 이 된다.
 
   #### 자료가 정렬되어 있는 경우
@@ -107,17 +107,17 @@
     end = n - 1
     while start <= end: # 비교되지 않은 원소가 없을 때까지 돈다.
       middle = (start + end) // 2
-      if a[middle] == key:
+      if a[middle] == key: # 요소가 key와 동일하면 True를 반환한다.
         return True
-      elif a[middle] > key:
-        end = middle - 1
+      elif a[middle] > key: # 요소보다 key가 작으면
+        end = middle - 1 # end를 mid - 1로 바꾼다.
       else:
-        start = middle + 1
+        start = middle + 1 # 반대의 경우는 start를 mid + 1로 한다.
     return False # 탐색동안 key값을 찾지 못했을 때
   ```
-  중간 인덱스의 값보다 크거나 작다만 비교한다고 생각했었다.<br>그러나 `if a[middle] == key: return True` 구문이 없다면, 중간 인덱스 값과 key가 같을 경우는 비교가 두 번 이상되어 비효율적이고, 다른 if문에 True를 반환하지 않기에 탐색에 성공할 수도 없었다.
+  중간 인덱스의 값보다 크거나 작다만 비교한다고 생각했었다.<br>그러나 `if a[middle] == key: return True` 구문이 없다면, <br>중간 인덱스 값과 key가 같을 경우는 비교가 두 번 이상되어 비효율적이고, <br>다른 if문에 True를 반환하지 않기에 탐색에 성공할 수도 없었다.
 
-### 인덱스 - 이진 탐색 트리
+### 인덱스 - 이진 탐색 트리 (수정 필)
 
 
 ## 선택 정렬
@@ -136,11 +136,12 @@
   ```python
   def selection_sort(arr, n):
     for i in range(n - 1):
-      min_idx = i
+      min_idx = i # 탐색하고자 하는 구간의 첫 번째 인덱스를 최소값 인덱스로 한다.
       for j in range(i + 1, n):
-        if arr[min_idx] > arr[j]:
-          min_idx = j
+        if arr[min_idx] > arr[j]: # 이후 초기 최소값보다 작은 값이 발견되면
+          min_idx = j # 최소값 인덱스를 갱신한다.
       arr[i], arr[min_idx] = arr[min_idx], arr[i]
+      # 최종적으로 탐색 구간 첫 번째 값과 구간 내 최소값의 인덱스를 교환한다.
   ```
 
 ## 자체 Q&A
