@@ -83,13 +83,89 @@
   > Function call은 그에 상관 없이 어느 한 함수 안에 다른 함수가 있는 모든 경우를 칭하기 때문이다.
 
 ### Memoization
+> 재귀 함수는 같은 input의 함수를 중복해서 돌리게 된다!<br>
+> => 중복을 최소화해보자
 
+**메모이제이션(memoization)** 은 컴퓨터 프로그램을 실행할 때, 이전에 계산한 값을 메모리에 저장하여 중복 계산을 방지해서 전체적인 실행속도를 빠르게 하는 기술이다.
 
-## DP
+  #### 예시
+  ```python
+  def fibo_memo(n):
+    global memo
+    if n >= 2 and memo[n] == 0:
+      memo[n] = fibo_memo(n - 1) + fibo_memo(n - 2)
+    return memo[n] # fibo_memo(n)의 결과를 memo 리스트에 넣어 반환한다.
 
+  memo = [0] * (n + 1) # 재귀 함수의 각 분기의 값을 저장하기 위한 memo 리스트를 생성한다.
+  memo[0] = 0
+  memo[1] = 1
+  ```
+  - 기존의 재귀 함수는 f(n)을 위해 f(1) 까지 모두 계산했어야 했다.
+  - Memoization을 이용하면, `n - 1` 이하에서의 함수값을 재계산 할 필요 없이 memo 리스트에서 불러오면 된다.
+  > **계산 시간이 크게 감소했다!!!**
+
+## DP (Dynamic Programming)
+크기가 작은 부분 문제들을 모두 해결한 후에 <br>그 해들을 이용하여 큰 크기의 부분 문제들을 해결해서,<br> 최종적으로 원래 주어진 문제를 해결하는 알고리즘
+
+  #### 예시
+  ```python
+  def fibo_dp(n):
+    f = [0] * (n + 1)
+    f[0] = 0
+    f[1] = 1
+    for i in range(2, n + 1):
+      f[i] = f[i - 1] + f[i - 2]
+  ```
+
+  #### 구현 방식
+  - recursive 방식
+  - iterative 방식
 
 ## DFS
+그래프에서 시작점의 한 방향으로 나아갈 때, <br>더 이상 갈 곳이 없다면 가장 마지막 분기점으로 돌아가 다른 방향을 탐색하는 알고리즘
 
+  #### 방식 (그림)
+  ![dfs](https://github.com/user-attachments/assets/6049b35a-558c-42ce-abf8-3b1b0e43fca6)
+
+  #### 구현
+  ```python
+  """
+  input:
+  1
+  7 8
+  1 2 1 3 2 4 2 5 4 6 5 6 6 7 3 7
+  """
+  def DFS(s, v):
+    visited = [False] * (v + 1) # 방문한 정점을 표시
+    stack = [] # 스택 생성
+    visited[s] = True # 시작 정점 방문 표시
+    cv = s
+    while True:
+      for w in adjL[cv]: # v에 인접하고, 방문 안 한 w가 있으면
+        if visited[w] == False:
+           stack.append(cv) # 현재 정점을 push하고
+           cv = w # w에 방문
+           visited[w] = True
+           break
+      else: # 남은 인접 정점이 없어서 break가 걸리지 않은 경우
+        if stack:
+          cv = stack.pop() # 마지막 갈림길 정점으로 cv 이동
+        else:
+          break
+
+  T = int(input())
+  for tc in range(1, T + 1):
+    v, e = map(int, input().split())
+    adjL = [[] for _ in range(v + 1)]
+    arr = list(map(int, input().split()))
+    for i in range(e):
+      v1, v2 = arr[i * 2], arr[i * 2 + 1]
+      adjL[v1].append(v2)
+      adjL[v2].append(v1)
+      # 행마다 원소 개수가 다른 2차원 리스트를 만드는 방법
+
+    DFS(1, v)
+  ```
 
 ## 자체 Q&A
 
