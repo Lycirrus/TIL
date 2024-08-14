@@ -148,4 +148,45 @@
 ### 버퍼 자료 구조
 - 순서대로 입력하고 출력되고 전달되어야 하므로 FIFO 방식의 Queue가 사용된다.
 
-## BFS (큰거 온다)
+## BFS
+탐색 시작점의 인접한 정점들 모두를 먼저 차례로 방문한 후에, 방문했던 정점을 시작점으로 하여 다시 인접한 정점들을 차례로 방문하는 방식
+
+  #### 예시
+  ```python
+  def BFS(G, v): # 그래프 G, 탐색 시작점 v
+    visited = [0] * (n + 1) # 방문 판단
+    queue = [] # 큐 생성
+    queue.append(v) # 시작점 v를 큐에 삽입
+    # 여기까지가 준비 단계
+    while queue:
+      t = queue.pop(0) # front 반환(방문할 노드)
+      if not visited[t]: # 방문 안한 곳이면
+        visited[t] = True # 방문 표시
+        visit(t) # 정점 t에서 할 일
+        for i in G[t]: # t와 연결된 모든 정점에 대해
+          if not visited[i]: # 방문하지 않았으면
+            queue.append(i) # 큐에 넣기
+            # for문은 대기열을 생성
+  ```
+
+  아래와 같이 하면 출발에서부터 거리가 어떻게 되는지 알 수 있다.
+  ```python
+  def bfs(G, s, v): # 여기서는 s가 시작점, v는 정점의 개수다
+    visited = [0] * (v + 1)
+    queue = []
+    queue.append(s)
+    visited[s] = 1
+    while queue:
+      t = queue.pop(0)
+      visit()
+      for w in G[t]:
+        if not visited[w]:
+          queue.append(w)
+          visited[w] = visited[t] + 1
+          # 마지막 구문에서 거리는 이전 노드의 +1이 된다.
+  ```
+
+## 자체 Q&A
+
+
+## ㄱㅂ ㄴㅇ ㄷㅇㅂㄱ
