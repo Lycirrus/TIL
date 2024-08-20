@@ -204,5 +204,26 @@ HTML 요소를 선택하여 스타일을 적용할 수 있도록 하는 선택�
   #### CSS 속성 분류
   - 상속 되는 속성
 
-### CSS Box Model
+## CSS Box Model(수정 필필요)
 웹 페이지의 모든 HTML 요소를 감싸는 사각형 상자 모델
+
+  #### 박스 타입
+  1. Block box : 
+  2. Inline box
+
+## CSS Position
+### CSS Layout
+각 요소의 **위치**와 **크기**를 조정하여 웹 페이지의 디자인을 결정하는 것
+- `Display`, `Position`, `Flexbox` 등이 있다.
+
+### CSS Position
+요소를 Normal Flow에서 제거하여 다른 위치로 배치하는 것
+- 다른 요소 위에 올리거나 화면의 특정 위치에 고정시키기
+
+  #### Position의 이동 방향
+  1. top
+  2. bottom
+  3. left
+  4. right
+  5. Z axis
+      > ppt에서 맨 위로 보내기, 맨 아래로 보내기와 같은 기능 
