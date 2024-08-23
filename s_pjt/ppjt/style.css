@@ -1,0 +1,39 @@
+* {
+  font-family: "Sunflower", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 300;
+  font-style: normal;
+}
+
+header {
+  background-color: lightcyan;
+}
+
+main {
+  border: 2px solid;
+  height: 100rem;
+}
+
+.frontpage {
+  height: 25%;
+  background-color: #404040;
+  color: white;
+}
+
+.my-intro {
+  height: 25%;
+}
+
+.skills {
+  height: 25%;
+  background-color: #404040;
+  color: white;
+}
+
+.project {
+  height: 25%;
+}
+
+footer {
+  border: 2px dashed #808080
+}
