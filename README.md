@@ -1,5 +1,9 @@
 ### 내가 배우고 공부한 내용을 담는 공간
 
+**24/09/19**
+- Django
+  - Template & URLs
+
 **24/09/13**
 - Django
   - Django 기본 구조
