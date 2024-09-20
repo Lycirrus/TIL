@@ -1,5 +1,9 @@
 ### 내가 배우고 공부한 내용을 담는 공간
 
+**24/09/20**
+- Django
+  - model 생성
+
 **24/09/19**
 - Django
   - Template & URLs
