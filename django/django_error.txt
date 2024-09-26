@@ -1,4 +1,4 @@
-NOT NULL CONSTRAINT
+- NOT NULL CONSTRAINT
 
 db는 무결성 원칙
 
