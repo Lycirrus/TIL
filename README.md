@@ -1,5 +1,16 @@
 ### 내가 배우고 공부한 내용을 담는 공간
 
+**24/09/30**
+- Django
+  - 로그인 및 로그아웃 기능 만들기
+
+**~24/09/29**
+- Django
+  - ORM(CRUD)
+  - Django Form
+  - Model Form
+  - Static과 Media 이미지
+
 **24/09/20**
 - Django
   - model 생성
