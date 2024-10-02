@@ -167,3 +167,63 @@ HTML 문서와 같은 리소스들을 가져올 수 있도록 해주는 규약
   - 몇 가지 공통 정보를 여러 다른 모델에 넣을 때 사용하는 클래스
   - DB 테이블을 만드는 데 사용되지 않으며, 대신 다른 모델의 기본 클래스로 사용되는 경우 해당 필드가 하위 클래스의 필드에 추가 됨
     > 따라서 migrations 시에 제외된다.
+
+## 회원 가입
+User 객체를 Create 하는 과정
+
+- `UserCreationForm()` : 회원 가입 시 사용자 입력 데이터를 받는 built-in ModelForm
+  > 사용자가 입력한 정보를 그대로 받아서 DB에 저장되어야 하기 때문에 ModelForm 사용
+
+### 회원가입 코드
+
+
+
+### 회원가입 에러
+> 회원 가입에 사용하는 UserCreationForm은 커스텀 유저 모델이 아닌, 과거 Django **기본 유저 모델로 작성**된 클래스이므로 오류 발생
+> - `accounts.User`가 아닌 `auth.User`로 되어있다!
+
+> 따라서 클래스 Meta의 **모델을 재작성** 해주어야한다.
+
+```python
+# forms.py
+
+class CustomUserCreationForm(UserCreationForm):
+  class Meta(UserCreationForm.Meta):
+    model = get_user_model()
+```
+- `get_user_model()` : 현재 프로젝트에서 **활성화된 사용자 모델**을 반환하는 함수
+
+
+## 회원 탈퇴
+User 객체를 Delete 하는 과정
+
+- User객체는 request에 들어있다.
+
+
+## 회원정보 수정
+User 객체를 Update 하는 과정
+
+- `UserChangeForm()` : 회원정보 수정 시 사용자 입력 데이터를 받는 built-in ModelForm
+
+
+## 비밀번호 변경
+인증된 사용자의 Session 데이터를 Update 하는 과정
+
+- `PasswordChangeForm()` : 비밀번호 변경 시 사용자 입력 데이터를 받는 built-in Form
+
+
+## 로그인 사용자에 대한 접근 제한
+1. `is_authenticated` 속성
+2. `login_required` 데코레이터
+
+### is_authenticated 속성
+사용자가 인증 되었는지 여부를 알 수 있는 User model의 속성
+- 모든 **User 인스턴스**에 대해 항상 **True**인 읽기 전용 속성
+- **비인증 사용자**에 대해서는 항상 **False**
+
+### login_required 데코레이터
+인증된 사용자에 대해서만 view 함수를 실행시키는 데코레이터
+- **비인증 사용자**의 경우 `/accounts/login/` 주소로 redirect
+
+
+## 참고
