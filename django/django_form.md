@@ -64,49 +64,155 @@ HTML 'input' 요소의 표현을 담당
 - ModelForm : 사용자 입력 데이터를 DB에 저장해야 할 때 사용
   > Model과 연결된 Form을 자동으로 생성해주는 기능을 제공한다.
 
-  #### 예시
+  #### form 예시
   ```python
-  class ArticleForm(forms.Form):
-    class 
+  from .models import Article
+
+  class ArticleForm(forms.ModelForm):
+    class Meta:
+      model = Article
+      fields = '__all__'
   ```
+  > 내부 클래스는 Django 제작자 측에서 단순히 이렇게 사용하라는 용도로 만들어둔 것이다.
 
 ### Meta class
+- Meta data : 데이터의 데이터
+- model form 에서의 Meta class
+  - model form에 대한 정보를 작성하는 클래스이다.
 
-
+  #### Meta class 속성
+  - model 속성 : 기반이 되는 모델을 입력
+  - fields 속성 : 모델이 가지는 필드들 중 사용할 필드를 정의
+  - exclude 속성 : 모델에서 포함하지 않을 필드를 지정
 
 ### ModelForm 적용
+  #### create 로직
+  ```python
+  # views.py
 
+  from .forms import ArticleForm
 
+  def create(request):
+    # 1. 모델폼 인스턴스 생성 (+ 사용자 입력 데이터를 통째로 인자로 작성)
+    form = ArticleForm(request.POST)
 
+    # 2. 유효성 검사
+    if form.is_valid():
+      article = form.save()
+      return redirect('articles:detail', article.pk)
+      ## 실패하면 Django에서 실패 이유를 form과 함께 넘겨준다.
+    context = {
+      'form': form,
+    }
+    return render(request, 'articles/new.html', context)
+  ```
+
+  - `is_valid()` : 여러 유효성 검사를 실행하고, 데이터가 유효한지에 대한 여부를 Boolean 형태로 반환한다.
+
+  #### edit 로직
+  ```python
+  # views.py
+
+  def edit(request, pk):
+    article = Article.objects.get(pk=pk)
+    form = ArticleForm(instance=article)
+    context = {
+      'article': article,
+      'form': form,
+    }
+    return render(request, 'articles/edit.html', context)
+  ```
+
+  #### update 로직
+  ```python
+  def update(request, pk):
+  article = Article.objects.get(pk=pk)
+  form = ArticleForm(request.POST, instance=article)
+  if form.is_valid():
+    form.save()
+    return redirect('articles:detail', article.pk)
+  context = {
+    'article': article,
+    'form': form,
+  }
+  return render(request, 'articles/edit.html', context)
+  ```
+
+### Save 메서드
+- `save()` : DB 객체를 만들고 저장하는 ModelForm의 인스턴스 메서드
+
+  #### save 메서드가 생성과 수정을 구분하는 법
+  키워드 인자 **instance** 여부를 통해 생성과 수정을 결정한다.
 
 ## HTTP 요청 다루기
-
-
-
-### View 함수 구조 변화
-
-
-
+- new와 create 함수의 공통점 및 차이점
+  - 공통점 : 데이터 생성을 구현하기 위해 존재한다.
+  - 차이점 : new는 `GET` method 요청만을, create는 `POST` method 요청만을 처리한다.
 
 ### new & create 함수 결합
+```python
+def create(request):
+  # POST 일 경우
+  if request.method == "POST":
+    # 객체 생성 및 자료 저장 로직
+    form = ArticleForm(request.POST)
+    if form.is_valid():
+      article = form.save()
+      return redirect('articles:detail', article.pk)
+  # POST가 아닐 경우
+  else:
+    # new함수에서의 form 인스턴스 생성
+    form = ArticleForm()
+  # POST인데 타당하지 않은 form일 경우 반환점이 필요하다.
+  context = {
+    'form': form,
+  }
+  return render(request, 'articles/create.html', context)
+```
 
-
-
+- 요청에 따른 변화
+  - `GET`: 게시글 **생성 페이지**를 요청
+  - `POST`:게시글 **생성**을 요청
 
 ### edit & update 함수 결합
-
-
-
+```python
+def update(request, pk):
+  article = Article.objects.get(pk=pk)
+  if request.method == "POST":
+    form = ArticleForm(request.POST, instance=article)
+    if form.is_valid():
+      form.save()
+      return redirect('articles:detail', article.pk)
+  else:
+    form = ArticleForm(instance=article)
+  context = {
+    'article': article,
+    'form': form,
+  }
+  return render(request, 'articles/update.html', context)
+```
 
 ## 참고
 ### ModelForm의 키워드 인자 구성
+ModelForm의 생성자 함수를 보면
+> `data`는 첫번째 인자이다.
+>
+> `instance`는 9번째 인자이다.
 
-
-
+- 따라서 data인 request.POST는 data 키워드를 사용하지 않아도 되지만, instance는 그렇지 않다.
 
 ### Widgets 응용
-
-
-
-
-### 필드를 수동으로 렌더링
+Form 클래스 안, Meta 클래스 위쪽에 입력한다.
+```python
+... # widget은 표현담당
+title = forms.CharField(widget = forms.TextInput(
+  attrs = {
+    'class': 'my-title',
+    'placeholder': 'Enter the title',
+    'maxlength': 10,
+    'rows': 5,
+    'cols': 50,
+  }
+error_messages = {'오류 메세지!'}
+))
+```

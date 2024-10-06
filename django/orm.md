@@ -80,10 +80,103 @@ Django 환경 안에서 실행되는 Python shell
 ### 단일 게시글 조회
 
 
+## HTTP 요청 메서드
+- HTTP : 네트워크 상에서 데이터를 주고 받기위한 약속
 
-## 참고
-### Field lookups
+- HTTP 요청 메서드
+  - 데이터에 대해 수행을 원하는 작업을 나타내는 것
+  - 클라이언트가 웹 서버에 특정 동작을 요청하기 위해 사용하는 표준 명령어
+  > `Get`, `Post` 등이 있다.
 
+### GET Method
+서버로부터 데이터를 요청하고 받아오는 데 사용 : **조회**
 
+  #### 특징
+  1. 데이터 전송
+     - URL의 쿼리 문자열을 통해 데이터를 전송
+  2. 데이터 제한
+     - URL 길이에 제한이 있어 대량의 데이터 전송에는 적합하지 않음
+  3. 브라우저 히스토리
+     - 요청 URL이 브라우저 히스토리에 남음
+     - 히스토리에 쌓인 스택으로 인해 '뒤로가기' 기능을 사용할 수 있음
+  4. 캐싱
+     - 브라우저는 GET 요청의 응답을 로컬에 저장할 수 있음
+     - 동일한 URL로 재요청할 때, 서버에 접속하지 않고 저장된 결과를 사용
+     - 페이지 로딩 시간을 크게 단축
 
-### ORM, QuerySet API를 사용하는 이유
+### POST Method
+서버에 데이터를 제출하여 리소스를 변경하는 데 사용 : **생성, 수정, 삭제**
+> DB에 요청하는 작업
+
+  #### 특징
+  1. 데이터 전송
+     - HTTP Body를 통해 데이터를 전송
+  2. 데이터 제한
+     - 대용량 데이터 처리 가능
+  3. 브라우저 히스토리
+     - POST 요청은 브라우저 히스토리에 남지 않음
+  4. 캐싱
+     - POST 요청은 기본적으로 캐시할 수 없음
+     - POST 요청이 일반적으로 서버의 상태를 변경하는 작업을 수행하기 때문
+
+### CSRF token
+- CSRF : 사이트 간 요청 위조
+  > 사용자가 자신의 의지와 무관하게 공격자가 의도한 행동을 하여 특정 웹 페이지를 보안에 취약하게 하거나 수정 또는 삭제 작업을 하게 만드는 공격 방법
+
+- 진실된 사이트에서 보낸 생성 요청인지 확인하기 위한 징표이다.
+
+## HTTP response status code
+서버가 클라이언트의 요청에 대한 처리 결과를 나타낸는 3자리 숫자
+
+### 역할
+1. 클라이언트에게 요청 처리 결과를 명확히 전달
+2. 문제 발생 시 디버깅에 도움
+3. 웹 애플리케이션의 동작을 제어하는 데 사용
+
+### 403 Forbidden
+- 서버에 요청은 전달되었지만, **권한** 때문에 거절되었다는 것을 의미
+
+> - 200번대 : 성공이유
+> - 400번대 : 클라이언트의 잘못
+> - 500번대 : 서버의 잘못
+
+## Redirect
+- 서버는 데이터 저장 후 페이지를 응답하는 것이 아닌 사용자를 적절한 기존 페이지로 보내야한다.
+> 사용자를 보낸다 -> 사용자가 GET 요청을 한번 더 보내도록 해야한다.
+
+- `redirect()`
+  - 클라이언트가 인자에 작성된 주소로 다시 요청을 보내도록 하는 함수
+
+## Delete
+```python
+def delete(request, pk):
+  # 삭제할 게시글을 조회
+  article = Article.objects.get(pk=pk)
+  # 조회한 게시글 삭제
+  article.delete()
+  return redirect('articles:index')
+```
+
+## Update
+### edit
+```python
+def edit(request, pk):
+  article = Article.objects.get(pk=pk)
+  context = {
+    'article': article,
+  }
+  return render(request, 'articles/edit.html', context)
+```
+
+### update
+```python
+def update(request, pk):
+  # 1. 수정할 게시글 조회
+  article = Article.objects.get(pk=pk)
+  # 2. 사용자가 입력한 새로운 데이터 추출 및 저장
+  article.title = request.POST.get('title')
+  article.content = request.POST.get('content')
+  # 3. 최종 저장
+  article.save()
+  return redirect('articles:detail', article.pk)
+```
