@@ -80,7 +80,7 @@ HTML 문서와 같은 리소스들을 가져올 수 있도록 해주는 규약
 ### Login
 로그인은 세션을 Create하는 과정
 
-- `AuthenticationFrom()` : 로그인 인증에 사용할 데이터를 입력 받는 built-in form
+- `AuthenticationForm()` : 로그인 인증에 사용할 데이터를 입력 받는 built-in form
 
   #### Login view
   ```python
